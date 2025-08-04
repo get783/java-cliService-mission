@@ -1,1 +1,1 @@
-rootProject.name = "hw-cliService-250804"
+rootProject.name = "java-cliService-mission"
