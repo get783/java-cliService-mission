@@ -1,0 +1,1 @@
+rootProject.name = "hw-cliService-250804"
