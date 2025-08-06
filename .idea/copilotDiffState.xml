@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/com/example/WiseSaying.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/example/WiseSaying.java" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/example/WiseSayingController.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/example/WiseSayingController.java" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/example/WiseSayingRepository.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/example/WiseSayingRepository.java" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/example/WiseSayingService.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/example/WiseSayingService.java" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/org/example/AppContext.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/org/example/AppContext.java" />
+              <option name="originalContent" value="package org.example;&#10;&#10;import org.example.controller.ArticleController;&#10;import org.example.controller.SystemController;&#10;import org.example.repository.ArticleRepository;&#10;import org.example.service.ArticleService;&#10;&#10;import java.time.format.DateTimeFormatter;&#10;import java.util.Scanner;&#10;&#10;public class AppContext {&#10;    public static final Scanner scanner;&#10;    public static final DateTimeFormatter forPrintDateTimeFormatter;&#10;    public static final WiseSayingRepository wiseSayingRepository;&#10;    public static final WiseSayingService wiseSayingService;&#10;    public static final WiseSayingController wiseSayingController;&#10;    public static final SystemController systemController;&#10;&#10;    static {&#10;        scanner = new Scanner(System.in);&#10;        forPrintDateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yy-MM-dd HH:mm:ss&quot;);&#10;        wiseSayingRepository = new WiseSayingRepository();&#10;        wiseSayingService = new WiseSayingService();&#10;        wiseSayingController = new WiseSayingController();&#10;        systemController = new SystemController();&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package org.example;&#10;&#10;import org.example.controller.ArticleController;&#10;import org.example.controller.SystemController;&#10;import org.example.repository.ArticleRepository;&#10;import org.example.service.ArticleService;&#10;&#10;import java.time.format.DateTimeFormatter;&#10;import java.util.Scanner;&#10;&#10;public class AppContext {&#10;    public static final Scanner scanner;&#10;    public static final DateTimeFormatter forPrintDateTimeFormatter;&#10;    public static final ArticleRepository articleRepository;&#10;    public static final ArticleService articleService;&#10;    public static final ArticleController articleController;&#10;    public static final SystemController systemController;&#10;&#10;    static {&#10;        scanner = new Scanner(System.in);&#10;        forPrintDateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yy-MM-dd HH:mm:ss&quot;);&#10;        articleRepository = new ArticleRepository();&#10;        articleService = new ArticleService();&#10;        articleController = new ArticleController();&#10;        systemController = new SystemController();&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/org/example/controller/ArticleController.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/org/example/controller/ArticleController.java" />
+              <option name="originalContent" value="package org.example.controller;&#10;&#10;import org.example.AppContext;&#10;import org.example.entity.Article;&#10;import org.example.service.ArticleService;&#10;&#10;import java.util.List;&#10;&#10;public class ArticleController {&#10;    ArticleService service = AppContext.articleService;&#10;&#10;    public Article getArticle(int id) throws Exception {&#10;        return service.getArticle(id);&#10;    }&#10;&#10;    public List&lt;Article&gt; getArticleList(String order, String keyword, int page) throws Exception {&#10;        List&lt;Article&gt; list = service.getArticleList(order, keyword, page, 5);&#10;        return list;&#10;    }&#10;&#10;    public int createArticle(String title, String content) throws Exception {&#10;        return service.createArticle(title, content);&#10;    }&#10;&#10;    public int updateArticle(int id, String title, String content) throws Exception {&#10;        return service.updateArticle(id, title, content);&#10;    }&#10;&#10;    public int deleteArticle(int id) throws Exception {&#10;        return service.deleteArticle(id);&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package org.example.controller;&#10;&#10;import org.example.AppContext;&#10;import org.example.entity.Article;&#10;import org.example.service.ArticleService;&#10;&#10;import java.util.List;&#10;&#10;public class ArticleController {&#10;    ArticleService service = AppContext.articleService;&#10;&#10;    public Article getArticle(int id) throws Exception {&#10;        return service.getArticle(id);&#10;    }&#10;&#10;    public List&lt;Article&gt; getArticleList(String order, String keyword, int page) throws Exception {&#10;        List&lt;Article&gt; list = service.getArticleList(order, keyword, page, 5);&#10;        return list;&#10;    }&#10;&#10;    public int createArticle(String title, String content) throws Exception {&#10;        return service.createArticle(title, content);&#10;    }&#10;&#10;    public int updateArticle(int id, String title, String content) throws Exception {&#10;        return service.updateArticle(id, title, content);&#10;    }&#10;&#10;    public int deleteArticle(int id) throws Exception {&#10;        return service.deleteArticle(id);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
