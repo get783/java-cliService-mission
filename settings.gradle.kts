@@ -1,1 +1,1 @@
-rootProject.name = "tdd-cliService-mission"
+rootProject.name = "java-cliService-mission"

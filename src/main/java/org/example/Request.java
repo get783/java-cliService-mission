@@ -1,9 +1,12 @@
 package org.example;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Getter
 public class Request {
     private final String actionName;
     private final Map<String, String> paramsMap;
@@ -20,10 +23,6 @@ public class Request {
                         bits -> bits[0].trim(),
                         bits -> bits[1].trim()
                 ));
-    }
-
-    public String getActionName() {
-        return actionName;
     }
 
     public String getParam(String paramName, String defaultValue) {

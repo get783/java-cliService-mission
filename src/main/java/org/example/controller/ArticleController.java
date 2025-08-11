@@ -5,11 +5,16 @@ import org.example.entity.Article;
 import org.example.service.ArticleService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArticleController {
-    ArticleService service = AppContext.articleService;
+    private final ArticleService service;
 
-    public Article getArticle(int id) throws Exception {
+    public ArticleController() {
+        this.service = AppContext.articleService;
+    }
+
+    public Optional<Article> getArticle(int id) throws Exception {
         return service.getArticle(id);
     }
 

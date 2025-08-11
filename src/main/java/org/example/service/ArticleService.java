@@ -5,11 +5,16 @@ import org.example.entity.Article;
 import org.example.repository.ArticleRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ArticleService {
-    ArticleRepository repository = AppContext.articleRepository;
+    private final ArticleRepository repository;
 
-    public Article getArticle(int id) throws Exception {
+    public ArticleService() {
+        repository = AppContext.articleRepository;
+    }
+
+    public Optional<Article> getArticle(int id) throws Exception {
         return repository.findById(id);
     }
 

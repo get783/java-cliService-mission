@@ -9,19 +9,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class AppContext {
-    public static final Scanner scanner;
-    public static final DateTimeFormatter forPrintDateTimeFormatter;
-    public static final ArticleRepository articleRepository;
-    public static final ArticleService articleService;
-    public static final ArticleController articleController;
-    public static final SystemController systemController;
+    public static Scanner scanner;
+    public static DateTimeFormatter forPrintDateTimeFormatter;
+    public static ArticleRepository articleRepository;
+    public static ArticleService articleService;
+    public static ArticleController articleController;
+    public static SystemController systemController;
 
-    static {
-        scanner = new Scanner(System.in);
+    public static void renew(Scanner _scanner) {
+        scanner = _scanner;
         forPrintDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         articleRepository = new ArticleRepository();
         articleService = new ArticleService();
         articleController = new ArticleController();
         systemController = new SystemController();
+    }
+
+    public static void renew() {
+        renew(new Scanner(System.in));
     }
 }

@@ -6,19 +6,20 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ArticleRepository {
     private static final String DB_PATH = "db/article";
-    private static final String LAST_ID_PATH = "/lastId.txt";
+    private static final String LAST_ID_FILE_NAME = "/lastId.txt";
 
-    private String getFileName(int id) {
+    private String getFilePath(int id) {
         return DB_PATH + "/" + id + ".json";
     }
 
     public int findLastId() throws IOException {
-        File lastIdFile = new File(DB_PATH + LAST_ID_PATH);
+        File lastIdFile = new File(DB_PATH + LAST_ID_FILE_NAME);
         if (!lastIdFile.exists()) return -1;
 
         try (BufferedReader br = new BufferedReader(new FileReader(lastIdFile))) {
@@ -28,15 +29,15 @@ public class ArticleRepository {
 
     public void saveLastId() throws IOException {
         int lastId = findLastId();
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(DB_PATH + LAST_ID_PATH))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(DB_PATH + LAST_ID_FILE_NAME))) {
             bw.write(String.valueOf(++lastId));
         }
     }
 
 
-    public Article findById(int id) throws IOException {
-        File f = new File(getFileName(id));
-        if (!f.exists()) return null;
+    public Optional<Article> findById(int id) throws IOException {
+        File f = new File(getFilePath(id));
+        if (!f.exists()) return Optional.empty();
 
         Article article = new Article();
         article.setId(id);
@@ -58,61 +59,21 @@ public class ArticleRepository {
                 }
             }
 
-            return article;
+            return Optional.of(article);
         }
     }
 
     public List<Article> findAll(String order, String keyword, int page, int pageSize) throws IOException {
-        List<Article> articleList = new ArrayList<>();
-
         int lastId = findLastId();
-
-//        int count = 0;
         int startCount = (page - 1) * pageSize + 1;
-//        int endCount = page * pageSize;
 
         if (startCount - 1 > lastId) return new ArrayList<>();
 
-//        if(order.equals("R")) {
-//            for (int i = 0; i <= lastId; i++) {
-//                Article article = findById(i);
-//                if (article == null) continue;
-//
-//                // filter
-//                if (!article.getTitle().contains(keyword) && !article.getContent().contains(keyword)) continue;
-//
-//                // page
-//                if (++count >= startCount) {
-//                    articleList.add(findById(i));
-//                }
-//                if (count >= endCount) break;
-//            }
-//        } else {
-//            for (int i = lastId; i >= 0; i--) {
-//                Article article = findById(i);
-//                if (article == null) continue;
-//
-//                // filter
-//                if (!article.getTitle().contains(keyword) && !article.getContent().contains(keyword)) continue;
-//
-//                // page
-//                if (++count >= startCount) {
-//                    articleList.add(findById(i));
-//                }
-//                if (count >= endCount) break;
-//            }
-//        }
-//
-//        if(order.equals("C")) {
-//            articleList = articleList.stream()
-//                    .sorted(Comparator.comparingInt(Article::getCount).reversed())
-//                    .collect(Collectors.toList());
-//        }
-
+        List<Article> articleList = new ArrayList<>();
         // findAll
         for (int i = lastId; i >= 0; i--) {
-            Article article = findById(i);
-            if (article != null) articleList.add(article);
+            Optional<Article> optionalArticle = findById(i);
+            if (optionalArticle.isPresent()) articleList.add(optionalArticle.get());
         }
 
         int totalCount = articleList.size(); // TODO
@@ -140,7 +101,7 @@ public class ArticleRepository {
         File dir = new File(DB_PATH);
         if (!dir.exists()) dir.mkdirs();
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(getFileName(article.getId())))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(getFilePath(article.getId())))) {
             bw.write("{\n");
             bw.write("  \"id\": " + article.getId() + ",\n");
             bw.write("  \"title\": \"" + article.getTitle().replace("\"", "\\\"") + "\"\n");
@@ -163,7 +124,7 @@ public class ArticleRepository {
     }
 
     public int deleteById(int id) {
-        new File(getFileName(id)).delete();
+        new File(getFilePath(id)).delete();
         return id;
     }
 }

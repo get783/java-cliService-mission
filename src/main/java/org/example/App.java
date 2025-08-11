@@ -5,6 +5,7 @@ import org.example.controller.SystemController;
 import org.example.entity.Article;
 
 import java.util.List;
+import java.util.Optional;
 
 public class App {
     void run() {
@@ -27,11 +28,12 @@ public class App {
                             break;
                         }
 
-                        Article article = articleController.getArticle(id);
-                        if (article == null) {
+                        Optional<Article> optionalArticle = articleController.getArticle(id);
+                        if (optionalArticle.isEmpty()) {
                             System.out.println(id + "번 게시글은 존재하지 않습니다.");
                             break;
                         }
+                        Article article = optionalArticle.get();
                         articleController.updateArticleCount(article);
 
                         System.out.println("번호: " + article.getId());
@@ -47,12 +49,12 @@ public class App {
                         int pageSize = 5;
 
                         List<Article> articleList = articleController.getArticleList(order, keyword, page, pageSize);
-                        int totalSize = articleList.size(); // TODO 총 검색 건수 담아서 리턴하기
-                        if (totalSize == 0) { // TODO
+                        if (articleList.size() == 0) {
                             System.out.println("검색 결과가 없습니다.");
                             break;
                         }
-                        System.out.printf("총 %d건의 검색 결과가 있습니다.\n\n", totalSize); // TODO
+                        int totalCount = 0; // TODO 총 검색 건수 담아서 리턴하기
+                        System.out.printf("총 %d건의 검색 결과가 있습니다.\n\n", totalCount); // TODO
                         System.out.println(" %-2s | %-18s | %-3s | %-8s ".formatted("번호", "제목", "조회수", "등록일"));
                         System.out.println("---------------------------------------------------");
                         articleList.forEach(article -> {
@@ -63,7 +65,7 @@ public class App {
                                     article.getRegDate())
                             );
                         });
-                        System.out.println("\n[%d / %d]".formatted(page, (totalSize - 1) / pageSize + 1)); // TODO
+                        System.out.println("\n[%d / %d]".formatted(page, (totalCount - 1) / pageSize + 1)); // TODO
                     }
                     case "write" -> {
                         System.out.print("제목: ");
@@ -82,20 +84,20 @@ public class App {
                             break;
                         }
 
-                        Article article = articleController.getArticle(id);
-                        if (article == null) {
+                        Optional<Article> optionalArticle = articleController.getArticle(id);
+                        if (optionalArticle.isEmpty()) {
                             System.out.println("❌ %d번 게시글은 존재하지 않습니다.".formatted(id));
                             break;
                         }
+                        Article article = optionalArticle.get();
 
                         System.out.print("제목 (현재: %s): ".formatted(article.getTitle()));
-                        String newTitle = systemController.scan();
+                        String title = systemController.scan();
                         System.out.print("내용 (현재: %s): ".formatted(article.getContent()));
-                        String newContent = systemController.scan();
+                        String content = systemController.scan();
 
-                        int updatedId = articleController.updateArticle(id, newTitle, newContent);
-                        if (updatedId == -1) System.out.println("❌ %d번 게시글은 존재하지 않습니다.".formatted(id));
-                        else System.out.println("⭕ %d번 게시글이 수정되었습니다.".formatted(updatedId));
+                        id = articleController.updateArticle(id, title, content);
+                        System.out.println("⭕ %d번 게시글이 수정되었습니다.".formatted(id));
                     }
                     case "delete" -> {
                         int id = rq.getParamAsInt("id", -1);
